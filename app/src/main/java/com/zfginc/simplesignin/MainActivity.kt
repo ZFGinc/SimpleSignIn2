@@ -7,7 +7,7 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 
 
-private const val MAIL = "admin@gmail.com"
+private const val EMAIL = "admin@gmail.com"
 private const val PASSWORD = "admin"
 
 class MainActivity : AppCompatActivity() {
@@ -54,11 +54,11 @@ class MainActivity : AppCompatActivity() {
         }
 
         if(!isEmailValid(email)){
-            showToast(R.string.email_field)
+            showToast(R.string.email_not_valid)
             return
         }
 
-        if(email == MAIL && password == PASSWORD)
+        if(email == EMAIL && password == PASSWORD)
             showToast(R.string.correct_login)
         else
             showToast(R.string.uncorrect_login)

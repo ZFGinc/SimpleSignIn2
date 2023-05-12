@@ -1,47 +1,63 @@
 package com.zfginc.simplesignin
 
 import android.os.Bundle
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ImageButton
-import android.widget.TextView
+import android.provider.ContactsContract.CommonDataKinds.Email
+import android.util.Patterns
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 
-private const val MAIL = "admin@gmail.com"
+private const val EMAIL = "admin@gmail.com"
 private const val PASSWORD = "admin"
+
 class Recovery : AppCompatActivity() {
 
-    private lateinit var login_button: Button;
+    private lateinit var recovery_button: Button
+    private lateinit var sign_in_text: TextView
 
-    private lateinit var login_google: ImageButton;
-    private lateinit var login_facebook: ImageButton;
-    private lateinit var login_twitter: ImageButton;
+    private lateinit var email_input: EditText
 
-    private lateinit var fogot_password: TextView;
-
-    private lateinit var username_input: EditText;
-    private lateinit var password_input: EditText;
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-/*
-        login_button = findViewById(R.id.login_button);
-        login_google = findViewById(R.id.login_google);
-        login_facebook = findViewById(R.id.login_facebook);
-        login_twitter = findViewById(R.id.login_twitter);
-        fogot_password = findViewById(R.id.forgot_password);
-        username_input = findViewById(R.id.username);
-        password_input = findViewById(R.id.password);
+        setContentView(R.layout.activity_recovery)
 
-        login_button.setOnClickListener(){
-            login();
+        recovery_button = findViewById(R.id.recovery_button);
+        email_input = findViewById(R.id.email);
+        sign_in_text = findViewById(R.id.sign_in)
+
+        recovery_button.setOnClickListener(){
+            Recovery()
+
         }
 
-        fogot_password.setOnClickListener(){
-            showToast("usr/pas - admin/admin")
+        sign_in_text.setOnClickListener(){
+            finish();
         }
-        */
+
     }
 
+    private fun showToast(id: Int){
+        Toast.makeText(this, id, Toast.LENGTH_SHORT).show()
+    }
+    private fun showToast(text: String){
+        Toast.makeText(this, text, Toast.LENGTH_LONG).show()
+    }
+
+    private fun isEmailValid(email: String?): Boolean {
+        return Patterns.EMAIL_ADDRESS.matcher(email).matches()
+    }
+
+    private fun Recovery(){
+        var email = email_input.getText().toString()
+
+        if(!isEmailValid(email)) {
+            showToast(R.string.email_not_valid)
+            return
+        }
+
+        if(email == EMAIL)
+            showToast("Password: $PASSWORD")
+        else
+            showToast(R.string.not_found)
+    }
 }

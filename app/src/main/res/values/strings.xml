@@ -12,6 +12,7 @@
     <string name="sign_in">Already have an account? Log in now</string>
     <string name="recovery">Recovery</string>
     <string name="enter_mail">Enter your email</string>
+    <string name="not_found">Account not found!</string>
 
     <string name="correct_login">You logined in system</string>
     <string name="uncorrect_login">Error!!!</string>
