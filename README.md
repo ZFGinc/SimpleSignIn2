@@ -514,7 +514,7 @@ class Recovery : AppCompatActivity() {
 
 ### Изменени от 19.05.2023 - Добавление корректной проверки пароля и почты.
 
-1. Добавлен метод на проверку длинны почты
+1. Добавлен метод на проверку длины почты
 ```kotlin
 private fun isPasswordValid(password: String): Boolean {
     if(password.length < 3 || password.length > 32) return false
@@ -537,7 +537,7 @@ private fun login(){
 }
 ```
 
-2. Добавлен список поддерживаемыз доменов почт
+2. Добавлен список поддерживаемых доменов почт
 ```kotlin
 private val emailSuggestions = arrayOf("gmail.com", "gmail.uk.com", "yahoo.com", "hotmail.com", "mail.ru","bk.ru","yandex.ru")
 ```
