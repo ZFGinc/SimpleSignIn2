@@ -19,6 +19,7 @@
 - [Цели и задачи](#цели-и-задачи)
 - [Решение задач](#решение-задач)
     - [Упражнение. Сделать функциональный макет](#ui)
+- [Изменения](#изменения)
 - [Вывод](#вывод)
 
 ***
@@ -502,6 +503,91 @@ class Recovery : AppCompatActivity() {
 
 <p align = "center">
     <img src = "images/2-3.png">
+</p>
+
+***
+
+# <p align = "center">Изменения</p>
+
+### Изменени от 19.05.2023 - Добавление корректной проверки пароля и почты.
+
+1. Добавлен метод на проверку длинны почты
+```kotlin
+private fun isPasswordValid(password: String): Boolean {
+    if(password.length < 3 || password.length > 32) return false
+    return true
+}
+```
+
+```kotlin
+private fun login(){
+    val password = password_input.getText().toString()
+
+    ...
+
+    if(!isPasswordValid(password)){
+        showToast(R.string.password_length)
+        return
+    }
+
+    ...
+}
+```
+
+2. Добавлен список поддерживаемыз доменов почт
+```kotlin
+private val emailSuggestions = arrayOf("gmail.com", "gmail.uk.com", "yahoo.com", "hotmail.com", "mail.ru","bk.ru","yandex.ru")
+```
+
+3. Добавлены методы отслеживания ввода при изменении текста в полях `email_input` и `password_input`
+```kotlin
+ override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+    setContentView(R.layout.activity_main)
+
+    ...
+
+    email_input.addTextChangedListener(object : TextWatcher {
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            var input = email_input.text.toString()
+            if (input.contains("@")) {
+                val index = input.indexOf("@")
+                val domain = input.substring(index + 1)
+
+                if(domain in emailSuggestions)
+                    error_email.text = ""
+                else
+                    error_email.text = getString(R.string.email_not_valid)
+            }
+        }
+
+        override fun afterTextChanged(s: Editable?) {}
+    })
+
+    password_input.addTextChangedListener(object : TextWatcher {
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            var input = password_input.text.toString()
+
+            if(isPasswordValid(input))
+                error_password.text = ""
+            else
+                error_password.text = getString(R.string.password_length)
+
+        }
+
+        override fun afterTextChanged(s: Editable?) {}
+    })
+
+    ...
+ }
+```
+
+<p align = "center">
+    <img src = "images/3-1.png">
 </p>
 
 ***
